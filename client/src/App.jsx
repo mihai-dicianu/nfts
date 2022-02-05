@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import getWeb3 from "./getWeb3";
+import React from "react";
+
 import {
   Typography,
   AppBar,
@@ -11,97 +11,34 @@ import {
   Grid,
   Toolbar,
   Container,
-  Box,
-  Link,
-  IconButton,
+  Divider,
 } from "@material-ui/core";
 import Button from "@mui/material/Button";
 import useStyles from "./styles";
-import Web3 from "web3";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
+
+import LinkBar from "./components/LinkBar";
+import ContactButtons from "./components/ContactButtons";
+
+import MetaMaskAuth from "./components/MetamaskAuth";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
 const App = () => {
   const classes = useStyles();
-
-  const [accounts, setAccounts] = useState(null);
-  const [web3, setWeb3] = useState(null);
-
-  const componentDidMount = () => {
-    window.addEventListener("load", async () => {
-      // Modern dapp browsers...
-      if (window.ethereum) {
-        web3 = new Web3(window.ethereum);
-
-        // Request account access if needed
-        await window.ethereum.enable();
-        // Accounts now exposed
-      }
-      // Legacy dapp browsers...
-      else if (window.web3) {
-        // Use Mist/MetaMask's provider.
-        web3 = window.web3;
-        console.log("Injected web3 detected.");
-
-        const provider = new Web3.providers.HttpProvider(
-          "http://127.0.0.1:8545"
-        );
-        web3 = new Web3(provider);
-        console.log("No web3 instance injected, using Local web3.");
-      }
-    });
-  };
-  const componentDidMounta = async () => {
-    console.log("omg");
-    // try {
-    // Get network provider and web3 instance.
-    const web3 = await getWeb3();
-
-    // Use web3 to get the user's accounts.
-    const accounts = await web3.eth.getAccounts();
-
-    setWeb3(web3);
-    setAccounts(accounts);
-    console.log("in connecting");
-    // Get the contract instance.
-    const networkId = await web3.eth.net.getId();
-    // const deployedNetwork = SimpleStorageContract.networks[networkId];
-    // const instance = new web3.eth.Contract(
-    //   SimpleStorageContract.abi,
-    //   deployedNetwork && deployedNetwork.address
-    // );
-
-    // Set web3, accounts, and contract to the state, and then proceed with an
-    // example of interacting with the contract's methods.
-    //this.setState({ web3, accounts, contract: instance }, this.runExample);
-    // } catch (error) {
-    // Catch any errors for any of the above operations.
-    // alert(
-    // `Failed to load web3, accounts, or contract. Check console for details.`
-    // );
-    // console.error(error);
-    // }
+  const addrlog = () => {
+    console.log("called log");
   };
   return (
     <>
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar display="flex">
-          <Grid justify="space-between" container spacing={24}>
+          <Grid justifyContent="space-between" container spacing={10}>
             <Grid item>
-              <Typography variant="h6">NFT Collection</Typography>
+              <ContactButtons />
             </Grid>
             <Grid item>
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={componentDidMount}
-              >
-                Connect Metamask
-              </Button>
+              <MetaMaskAuth onAddressChanged={addrlog} />
             </Grid>
           </Grid>
         </Toolbar>
@@ -109,14 +46,10 @@ const App = () => {
       <main>
         <div className={classes.container}>
           <Container maxWidth="sm">
-            <Typography
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
+            <Typography variant="h2" align="center" color="textPrimary">
               NFT Collection
             </Typography>
+            <Divider></Divider>
             <Typography
               variant="h5"
               align="center"
@@ -126,38 +59,7 @@ const App = () => {
               This is an NFT collection
             </Typography>
             <div className={classes.button}>
-              <Grid container spacing={2} justifyContent="center">
-                <Grid item>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    startIcon={<GitHubIcon />}
-                  >
-                    <Link
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href="https://github.com/mihaidicianu/nfts"
-                    >
-                      Github repository
-                    </Link>
-                  </Button>
-                </Grid>
-                <Grid item>
-                  <Button
-                    variant="outlined "
-                    color="primary"
-                    startIcon={<DocumentScannerIcon />}
-                  >
-                    <Link
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      href="https://rinkeby.etherscan.io/"
-                    >
-                      Smart contract
-                    </Link>
-                  </Button>
-                </Grid>
-              </Grid>
+              <LinkBar />
             </div>
           </Container>
         </div>
@@ -220,27 +122,11 @@ const App = () => {
           </Grid>
         </Container>
       </main>
-      <footer className={classes.footer} display="flex">
+      <footer className={classes.footer}>
         <Typography variant="h6" align="center" gutterBottom>
-          Footer
+          Contact
         </Typography>
-        <Typography variant="subtitle1" align="center" color="textSecondary">
-          Footer purpose
-        </Typography>
-        <Grid spacing={2} justifyContent="center">
-          <Grid item>
-            <IconButton
-              aria-label="Linkedin.com"
-              onClick={() =>
-                window.open(
-                  "https://www.linkedin.com/in/mihai-dicianu-9a6308188/"
-                )
-              }
-            >
-              <LinkedInIcon fontSize="large" />
-            </IconButton>
-          </Grid>
-        </Grid>
+        <ContactButtons />
       </footer>
     </>
   );

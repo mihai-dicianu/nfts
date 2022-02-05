@@ -28,7 +28,17 @@
     "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "react/jsx-props-multiline": [
+      "error",
+      {
+        "maximum": {
+          "single": 4,
+          "multi": 1
+        },
+        "when": "always"
+      }
+    ]
   },
   "browserslist": {
     "production": [
