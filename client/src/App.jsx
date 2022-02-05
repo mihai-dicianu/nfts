@@ -12,11 +12,15 @@ import {
   Toolbar,
   Container,
   Box,
+  Link,
+  IconButton,
 } from "@material-ui/core";
-import { PhotoCamera } from "@material-ui/icons";
 import Button from "@mui/material/Button";
 import useStyles from "./styles";
 import Web3 from "web3";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import DocumentScannerIcon from "@mui/icons-material/DocumentScanner";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
@@ -86,11 +90,7 @@ const App = () => {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar display="flex">
-          <Grid
-            justify="space-between" // Add it here :)
-            container
-            spacing={24}
-          >
+          <Grid justify="space-between" container spacing={24}>
             <Grid item>
               <Typography variant="h6">NFT Collection</Typography>
             </Grid>
@@ -123,18 +123,38 @@ const App = () => {
               color="textSecondary"
               paragraph
             >
-              This is a NFT collection, keep the sea let's go{" "}
+              This is an NFT collection
             </Typography>
             <div className={classes.button}>
               <Grid container spacing={2} justifyContent="center">
                 <Grid item>
-                  <Button variant="contained" color="primary">
-                    See my photos
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    startIcon={<GitHubIcon />}
+                  >
+                    <Link
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href="https://github.com/mihaidicianu/nfts"
+                    >
+                      Github repository
+                    </Link>
                   </Button>
                 </Grid>
                 <Grid item>
-                  <Button variant="outlined " color="primary">
-                    Secondary action
+                  <Button
+                    variant="outlined "
+                    color="primary"
+                    startIcon={<DocumentScannerIcon />}
+                  >
+                    <Link
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      href="https://rinkeby.etherscan.io/"
+                    >
+                      Smart contract
+                    </Link>
                   </Button>
                 </Grid>
               </Grid>
@@ -200,13 +220,27 @@ const App = () => {
           </Grid>
         </Container>
       </main>
-      <footer className={classes.footer}>
+      <footer className={classes.footer} display="flex">
         <Typography variant="h6" align="center" gutterBottom>
           Footer
         </Typography>
         <Typography variant="subtitle1" align="center" color="textSecondary">
           Footer purpose
         </Typography>
+        <Grid spacing={2} justifyContent="center">
+          <Grid item>
+            <IconButton
+              aria-label="Linkedin.com"
+              onClick={() =>
+                window.open(
+                  "https://www.linkedin.com/in/mihai-dicianu-9a6308188/"
+                )
+              }
+            >
+              <LinkedInIcon fontSize="large" />
+            </IconButton>
+          </Grid>
+        </Grid>
       </footer>
     </>
   );
