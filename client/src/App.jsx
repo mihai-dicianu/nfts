@@ -33,7 +33,7 @@ const App = () => {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar display="flex">
-          <Grid justifyContent="space-between" container spacing={10}>
+          <Grid container alignItems="center" justifyContent="space-between">
             <Grid item>
               <ContactButtons />
             </Grid>
@@ -49,14 +49,15 @@ const App = () => {
             <Typography variant="h2" align="center" color="textPrimary">
               NFT Collection
             </Typography>
-            <Divider></Divider>
+            <Divider />
             <Typography
               variant="h5"
               align="center"
               color="textSecondary"
               paragraph
             >
-              This is an NFT collection
+              Use the buttons below to see the Github repository, the deployed
+              smart contract or to mint a new NFT
             </Typography>
             <div className={classes.button}>
               <LinkBar />

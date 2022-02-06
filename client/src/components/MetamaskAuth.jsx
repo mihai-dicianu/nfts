@@ -1,7 +1,20 @@
 import React, { useEffect, useState } from "react";
 
-import { SvgIcon } from "@material-ui/core";
 import Button from "@mui/material/Button";
+import { Box, Grid, Link } from "@material-ui/core";
+import SvgIcon from "@mui/material/SvgIcon";
+import Icon from "@material-ui/core/Icon";
+
+import { homepage } from "../../package.json";
+
+const MetamaskIcon = () => {
+  return (
+    <Icon>
+      <img classes={{ height: "100%" }} src="../images/metamask-fox.svg" />
+    </Icon>
+  );
+};
+
 function isMobileDevice() {
   return "ontouchstart" in window || "onmsgesturechange" in window;
 }
@@ -58,22 +71,29 @@ export default function MetaMaskAuth({ onAddressChanged }) {
   );
 }
 
-const MetamaskIcon = (props) => {
-  return (
-    <SvgIcon {...props}>
-      <path d="../images/metamask-fox.svg" />
-    </SvgIcon>
-  );
-};
-
 function Connect({ setUserAddress }) {
   if (isMobileDevice()) {
-    const dappUrl = "metamask-auth.ilamanov.repl.co"; // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
+    const dappUrl = homepage.replace("https://", ""); // TODO enter your dapp URL. For example: https://uniswap.exchange. (don't enter the "https://")
     const metamaskAppDeepLink = "https://metamask.app.link/dapp/" + dappUrl;
     return (
-      <a href={metamaskAppDeepLink}>
-        <button>Connect to MetaMask</button>
-      </a>
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={
+          <SvgIcon>
+            <MetamaskIcon />
+          </SvgIcon>
+        }
+        onClick={() => connect(setUserAddress)}
+      >
+        <Link
+          target="_blank"
+          rel="noopener noreferrer"
+          href={metamaskAppDeepLink}
+        >
+          Connect to MetaMask
+        </Link>
+      </Button>
     );
   }
 
@@ -84,13 +104,7 @@ function Connect({ setUserAddress }) {
       startIcon={<MetamaskIcon />}
       onClick={() => connect(setUserAddress)}
     >
-      {/* <Link
-        target="_blank"
-        rel="noopener noreferrer"
-        href="https://github.com/mihaidicianu/nfts"
-      > */}
       Connect to MetaMask
-      {/* </Link> */}
     </Button>
   );
 }
