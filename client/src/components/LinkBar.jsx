@@ -7,6 +7,10 @@ import { Grid, Link } from "@material-ui/core";
 import Button from "@mui/material/Button";
 
 const LinkBar = () => {
+  const jsonData = require('../contracts/Nfts.json'); 
+  const scAddress = jsonData.networks[4].address;
+   
+  console.log(jsonData);
   return (
     <Grid container spacing={2} justifyContent="center">
       <Grid item>
@@ -30,7 +34,7 @@ const LinkBar = () => {
           <Link
             target="_blank"
             rel="noopener noreferrer"
-            href="https://rinkeby.etherscan.io/"
+            href={"https://rinkeby.etherscan.io/address/" + scAddress}
             style={{ color: "#FFF" }}
           >
             Smart contract
